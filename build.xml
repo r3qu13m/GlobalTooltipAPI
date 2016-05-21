@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="GlobalTooltipHandler" default="default">
+    <target name="default" depends="copy, build, reobf, zip, clean">
+        
+    </target>
+
+	<target name="copy">
+		<copy todir="../../src/minecraft/r3qu13m">
+            <fileset dir="src/r3qu13m" /> 
+        </copy>
+    </target>
+
+    <target name="build">
+        <exec executable="./recompile.sh" dir="../.." />
+    </target>
+
+    <target name="reobf">
+        <exec executable="./reobfuscate.sh"  dir="../.." />
+    </target>
+
+    <target name="zip">
+        <jar basedir="../../reobf/minecraft" jarfile="GlobalTooltipAPI.jar">
+        	<manifest>
+        	   <attribute name="FMLCorePlugin" value="r3qu13m.core.gtip.GlobalTooltipAPICore"/>
+        	</manifest>
+        </jar>
+        <zip basedir="src/" destfile="GlobalTooltipAPI-src.zip" includes="r3qu13m/api/**" />
+    </target>
+
+    <target name="clean">
+        <delete dir="../../src/minecraft/r3qu13m" />
+    </target>
+
+</project>
